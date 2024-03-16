@@ -10,19 +10,22 @@ function cardData(item) {
 }
 
 function createCard(cardData, deleteCard) {
-  initialCards.forEach(function(item) {
-    const cardElement = cardData(item)
-    cardsContainer.append(cardElement);
-    const deleteButton = cardElement.querySelector('.card__delete-button');
-    deleteButton.addEventListener('click', () => deleteCard(cardElement)); 
-  })  
+  const card = cardData;
+  const deleteButton = card.querySelector('.card__delete-button');
+  deleteButton.addEventListener('click', () => deleteCard(card)); 
+  
+  return card;
 }
 
 function deleteCard(cardElementDel) {
   cardElementDel.remove();
 }
 
-createCard(cardData, deleteCard);
+
+initialCards.forEach(function(item) {
+  const cardElement = createCard(cardData(item), deleteCard);
+  cardsContainer.append(cardElement);
+})
 
 // @todo: Темплейт карточки
 // @todo: DOM узлы
