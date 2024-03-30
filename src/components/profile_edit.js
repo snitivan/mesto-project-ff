@@ -1,7 +1,10 @@
 
+import { click_popup_close } from "./modal";
+
 const formElement = document.querySelector('.popup__form');
 const nameInput = formElement.querySelector('.popup__input_type_name')
 const jobInput = formElement.querySelector('.popup__input_type_description')
+const profile_edit = document.querySelector('.popup_type_edit');
 
 function handleFormSubmit(evt) {
     evt.preventDefault();
