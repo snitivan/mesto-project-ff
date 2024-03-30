@@ -1,7 +1,12 @@
+import { click_popup_close } from "./modal";
+import { deleteCard } from "./card";
+
 const addcard_formElement = document.querySelector('div.popup.popup_type_new-card > .popup__content > .popup__form');
 const addcard_nameInput = addcard_formElement.querySelector('.popup__input_type_card-name')
 const addcard_pictureInput = addcard_formElement.querySelector('.popup__input_type_url')
 const cardTemplate = document.querySelector('#card-template').content;
+const cardsContainer = document.querySelector('.places__list');
+const add_new_card = document.querySelector('.popup_type_new-card');
 
 function addcardFormSubmit(evt) {
     evt.preventDefault();
