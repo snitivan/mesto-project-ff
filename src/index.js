@@ -1,63 +1,68 @@
 import './styles/index.css';
 import { initialCards } from './cards';
+import { _ } from 'core-js';
+import { createCard, deleteCard } from './components/card';
+import { click_popup_close, click_popup_open, close_modal } from './components/modal';
+import { addcard_formElement, addcardFormSubmit } from './components/add_new_card';
+import { formElement, handleFormSubmit } from './components/profile_edit';
 
-const add_icon = new URL('./images/add-icon.svg', import.meta.url);
-const avatar = new URL('./images/avatar.jpg', import.meta.url);
-const card_1 = new URL('./images/card_1.jpg', import.meta.url);
-const card_2 = new URL('./images/card_2.jpg', import.meta.url);
-const card_3 = new URL('./images/card_3.jpg', import.meta.url);
-const close_img = new URL('./images/close.svg', import.meta.url);
-const delete_icon = new URL('./images/delete-icon.svg', import.meta.url);
-const edit_icon = new URL('./images/edit-icon.svg', import.meta.url);
-const like_active = new URL('./images/like-active.svg', import.meta.url);
-const like_inactive = new URL('./images/like-inactive.svg', import.meta.url);
-const logo = new URL('./images/logo.svg', import.meta.url);
-
-const images_tuple = [
-  { name: 'add_icon', link: add_icon },
-  { name: 'avatar', link: avatar },
-  { name: 'card_1', link: card_1 },
-  { name: 'card_2', link: card_2 },
-  { name: 'card_3', link: card_3 },
-  { name: 'close_img', link: close_img },
-  { name: 'delete_icon', link: delete_icon },
-  { name: 'edit_icon', link: edit_icon },
-  { name: 'like_active', link: like_active },
-  { name: 'like_inactive', link: like_inactive },
-  { name: 'logo', link: logo },
-];
-
-const cardTemplate = document.querySelector('#card-template').content;
 const cardsContainer = document.querySelector('.places__list');
 
-function cardData(item) {
-  const cardElement = cardTemplate.querySelector('.places__item').cloneNode(true);
-  cardElement.querySelector('.card__image').src = item.link;
-  cardElement.querySelector('.card__title').textContent = item.name;
-  cardElement.querySelector('.card__image').alt = `Фото ${item.name}`;
-  return cardElement
-}
-
-function createCard(cardData, deleteCard) {
-  const card = cardData;
-  const deleteButton = card.querySelector('.card__delete-button');
-  deleteButton.addEventListener('click', () => deleteCard(card)); 
-  
-  return card;
-}
-
-function deleteCard(cardElementDel) {
-  cardElementDel.remove();
-}
-
-
 initialCards.forEach(function(item) {
-  const cardElement = createCard(cardData(item), deleteCard);
+  const cardElement = createCard(item, deleteCard);
   cardsContainer.append(cardElement);
 })
 
-// @todo: Темплейт карточки
-// @todo: DOM узлы
-// @todo: Функция создания карточки
-// @todo: Функция удаления карточки
-// @todo: Вывести карточки на страницу
+const profile_edit_btn = document.querySelector('.profile__edit-button');
+const profile_edit = document.querySelector('.popup_type_edit');
+const popup = document.querySelector('.popup');
+const popup_addcard = document.querySelector(".popup_type_new-card");
+const popup_close_btn_profile = document.querySelector('.popup__close');
+const popup_close_btn_addcard = document.querySelector('.popup_type_new-card > .popup__content > .popup__close');
+const add_new_card_btn = document.querySelector('.profile__add-button');
+const add_new_card = document.querySelector('.popup_type_new-card');
+
+profile_edit_btn.addEventListener('click', function() {
+  click_popup_open(profile_edit)
+  const profile_name = document.querySelector('.profile__title').textContent;
+  const profile_description = document.querySelector('.profile__description').textContent;
+  const edit_profile_form = document.forms.edit_profile;
+  const name = edit_profile_form.name;
+  const description = edit_profile_form.description;
+  name.value = profile_name;
+  description.value = profile_description;
+})
+
+popup.addEventListener('click', function(evt) {
+  if (evt.target.classList.contains('popup')) {
+    click_popup_close(profile_edit);
+  };
+});
+
+popup_addcard.addEventListener('click', function(evt) {
+  if (evt.target.classList.contains('popup')) {
+    click_popup_close(add_new_card);
+    addcard_formElement.reset();
+  };
+});
+
+popup_close_btn_profile.addEventListener('click', () => {
+  click_popup_close(profile_edit);
+})
+
+popup_close_btn_addcard.addEventListener('click', () => {
+  click_popup_close(add_new_card);
+  addcard_formElement.reset();
+})
+
+add_new_card_btn.addEventListener('click', function() {
+  click_popup_open(add_new_card);
+})
+
+// Form profile submit
+
+formElement.addEventListener('submit', handleFormSubmit); 
+
+// Form add_card submit
+
+addcard_formElement.addEventListener('submit', addcardFormSubmit); 
