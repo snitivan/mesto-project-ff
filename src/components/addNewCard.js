@@ -1,5 +1,6 @@
-import { clickPopupClose } from "./modal";
+import { clickPopupClose, clickPopupOpen } from "./modal";
 import { createCard, deleteCard } from "./card";
+import { popupImage, popupCaption, cardPopup } from "..";
 
 const addCardFormElement = document.querySelector('div.popup.popup_type_new-card > .popup__content > .popup__form');
 const addCardNameInput = addCardFormElement.querySelector('.popup__input_type_card-name')
@@ -13,7 +14,7 @@ function addcardFormSubmit(evt) {
       name: addCardNameInput.value,
       link: addCardPictureInput.value
     };
-    const cardElement = createCard(initCard, deleteCard);
+    const cardElement = createCard(initCard, cardPopup, popupImage, popupCaption, clickPopupOpen, deleteCard);
     cardsContainer.prepend(cardElement);
     clickPopupClose(addNewCard);
     addCardFormElement.reset();

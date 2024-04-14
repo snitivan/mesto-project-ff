@@ -7,15 +7,8 @@ import { addCardFormElement, addcardFormSubmit } from './components/addNewCard';
 import { formElement, handleFormSubmit } from './components/profileEdit';
 
 const cardsContainer = document.querySelector('.places__list');
-
-initialCards.forEach(function(item) {
-  const cardElement = createCard(item, deleteCard);
-  cardsContainer.append(cardElement);
-})
-
 const profileEditBtn = document.querySelector('.profile__edit-button');
 const profileEdit = document.querySelector('.popup_type_edit');
-const popupImage = document.querySelector('.popup_type_image')
 const popupAddCard = document.querySelector('.popup_type_new-card');
 const popupCloseBtnAddCard = document.querySelector('.popup_type_new-card > .popup__content > .popup__close');
 const addNewCardBtn = document.querySelector('.profile__add-button');
@@ -23,6 +16,14 @@ const addNewCard = document.querySelector('.popup_type_new-card');
 const profileName = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
 const closeButton = document.querySelectorAll('.popup__close');
+const cardPopup = document.querySelector('.popup_type_image');
+const popupImage = cardPopup.querySelector('.popup__image')
+const popupCaption = cardPopup.querySelector('.popup__caption')
+
+initialCards.forEach(function(item) {
+  const cardElement = createCard(item, cardPopup, popupImage, popupCaption, clickPopupOpen, deleteCard);
+  cardsContainer.append(cardElement);
+})
 
 profileEditBtn.addEventListener('click', function() {
   clickPopupOpen(profileEdit)
@@ -39,9 +40,9 @@ profileEdit.addEventListener('click', function(evt) {
   };
 });
 
-popupImage.addEventListener('click', function(evt) {
+cardPopup.addEventListener('click', function(evt) {
   if (evt.target.classList.contains('popup_type_image')) {
-    clickPopupClose(popupImage);
+    clickPopupClose(cardPopup);
   };
 });
 
@@ -73,4 +74,4 @@ formElement.addEventListener('submit', handleFormSubmit);
 
 addCardFormElement.addEventListener('submit', addcardFormSubmit); 
 
-export {profileName , profileDescription}
+export {profileName , profileDescription, cardPopup, popupImage, popupCaption}
